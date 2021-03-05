@@ -1,0 +1,20 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+body {
+    color: #000;
+    overflow-x: hidden;
+    height: 100%;
+    background-color: #f0ffff;
+    background-repeat: no-repeat
+}
+
+@import './login';
+@import './home';
+@import './logo-slider';
