@@ -4,7 +4,7 @@
 
 <main role="main">
     <div class="container">
-        <form action="{{ route('publish') }}" method="post" enctype="multipart/form-data" >
+        <form action="{{ route('publish') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row p-4">
                 <div class="col-lg-3 bg-white shadow-sm border rounded p-4 m-2">
@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-check">
                                 <div class="row">
-                                    <input class="form-check-input" type="radio" name="layout" id="layout2" value="2" disabled>
+                                    <input class="form-check-input" type="radio" name="layout" id="layout2" value="2">
                                     <label class="form-check-label" for="layout2">
                                         Layout two
                                     </label>

@@ -23,4 +23,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/form', [EditorController::class, 'form'])->name('form');
 Route::post('/publish', [EditorController::class, 'publish'])->name('publish');
-Route::get('/download', [EditorController::class, 'download'])->name('download');
+Route::post('/download', [EditorController::class, 'download'])->name('download');

@@ -104,11 +104,66 @@
         <div class="col-lg-8 p-5">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
+                    @if(isset($images) && isset($videos))
+                        @foreach(array_merge($images, $videos) as $key=>$item)
+                            <li data-target="#myCarousel" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
+                        @endforeach
+                    @elseif(isset($images))
+                        @foreach($images as $key=>$image)
+                            <li data-target="#myCarousel" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
+                        @endforeach
+                    @elseif(isset($videos))
+                        @foreach($videos as $key=>$video)
+                            <li data-target="#myCarousel" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
+                        @endforeach
+
+                    @else
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                     <li data-target="#myCarousel" data-slide-to="1"></li>
                     <li data-target="#myCarousel" data-slide-to="2"></li>
+                    @endif
                 </ol>
                 <div class="carousel-inner">
+                    @if(isset($images) && isset($videos))
+                        @foreach($images as $key=>$image)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <div class="images d-flex flex-column justify-content-center"><img src="{{ asset('/storage/'.$image) }}" alt="image"></div>
+                            </div>
+                        @endforeach
+
+                        @foreach($videos as $key=>$video)
+                            <div class="carousel-item">
+                                <div class="videos d-flex flex-column justify-content-center">
+                                    <video controls>
+                                        <source src="{{ asset('/storage/'.$video) }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    @elseif(isset($images))
+
+                        @foreach($images as $key=>$image)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <div class="images d-flex flex-column justify-content-center"><img src="{{ asset('/storage/'.$image) }}" alt="image"></div>
+                            </div>
+                        @endforeach
+                        
+                    @elseif(isset($videos))
+
+                        @foreach($videos as $key=>$video)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <div class="videos d-flex flex-column justify-content-center">
+                                    <video controls>
+                                        <source src="{{ asset('/storage/'.$video) }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    @else
                     <div class="carousel-item active">
                         <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label=" :  " preserveAspectRatio="xMidYMid slice" focusable="false">
                             <title> </title>
@@ -151,6 +206,8 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+
                 </div>
                 <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -176,12 +233,12 @@
                             <div class="owl-carousel owl-theme brands_slider">
                                 @if(isset($logos))
                                 @foreach($logos as $logo)
-                                    <div class="owl-item">
-                                        <div class="brands_item d-flex flex-column justify-content-center"><img src="{{ asset('/storage/'.$logo) }}" alt="logo"></div>
-                                    </div>
+                                <div class="owl-item">
+                                    <div class="brands_item d-flex flex-column justify-content-center"><img src="{{ asset('/storage/'.$logo) }}" alt="logo"></div>
+                                </div>
                                 @endforeach
                                 @else
-                                
+
                                 <div class="owl-item">
                                     <div class="brands_item d-flex flex-column justify-content-center"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1561819026/brands_1.jpg" alt=""></div>
                                 </div>
@@ -218,12 +275,12 @@
                             <div class="owl-carousel owl-theme banners_slider">
                                 @if(isset($banners))
                                 @foreach($banners as $banner)
-                                    <div class="owl-item">
-                                        <div class="brands_item d-flex flex-column justify-content-center"><img src="{{ asset('storage/'.$banner) }}" alt="logo"></div>
-                                    </div>
+                                <div class="owl-item">
+                                    <div class="brands_item d-flex flex-column justify-content-center"><img src="{{ asset('storage/'.$banner) }}" alt="logo"></div>
+                                </div>
                                 @endforeach
                                 @else
-                                
+
                                 <div class="owl-item">
                                     <div class="banners_item d-flex flex-column justify-content-center"><img class="center-block d-block mx-auto" src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1561819026/brands_1.jpg" alt=""></div>
                                 </div>
@@ -304,7 +361,11 @@
                 </div>
             </div>
         </div>
-        <a href="/download" class="btn btn-primary" role="button">Download</a>
+
+        <form action="{{ route('download') }}" method="POST" id="" class="float-left mr-auto" style="display: inline;">
+            @csrf
+            <button type="submit" class="btn btn-primary">Download</button>
+        </form>
 
     </div>
 

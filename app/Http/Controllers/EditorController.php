@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EditorController extends Controller
 {
@@ -37,7 +39,10 @@ class EditorController extends Controller
             $banners = $request->banners;
 
             foreach($banners as $banner) {
+                // $imageName = time().'.'.$banner->extension();
+                // $ban = $banner->move(public_path('images'), $imageName);
                 $ban = $banner->store('banners');
+                
                 array_push($pubbanners,$ban);
             }    
         }
@@ -75,7 +80,8 @@ class EditorController extends Controller
         $mytime = Carbon::now();
         $currentTime = $mytime->toDateTimeString();
 
-        return view('home', [
+        session([
+            'layout' => $layout,
             'currentTime' => $currentTime,
             'banners' => $pubbanners,
             'logos' => $publogos,
@@ -85,6 +91,87 @@ class EditorController extends Controller
             'rsscontent' => $rsscontent
         ]);
 
+        return view('home', [
+            'layout' => $layout,
+            'currentTime' => $currentTime,
+            'banners' => $pubbanners,
+            'logos' => $publogos,
+            'videos' => $pubvideos,
+            'images' => $pubimages,
+            'mycontent' => $mycontent,
+            'rsscontent' => $rsscontent
+        ]);
+
+    }
+
+    public function download(Request $request)
+    {
+        // dd($request);
+        $logos = session('logo');
+        $banners = session('videos');
+        $videos = session('videos');
+        $images = session('images');
+        $layout = session('layout');
+        $mycontent = session('my_content');
+        $rsscontent = session('rss_content');
+        $currentTime = session('currentTime');
+
+        // $view = View::make('home', [
+        //     'currentTime' => $currentTime,
+        //     'banners' => $pubbanners,
+        //     'logos' => $publogos,
+        //     'videos' => $pubvideos,
+        //     'images' => $pubimages,
+        //     'mycontent' => $mycontent,
+        //     'rsscontent' => $rsscontent
+        // ]);
+
+        // $html = $view->render();
+        if ($layout == 1) {
+            $html = view('one', [
+                'currentTime' => $currentTime,
+                'banners' => $banners,
+                'logos' => $logos,
+                'videos' => $videos,
+                'images' => $images,
+                'mycontent' => $mycontent,
+                'rsscontent' => $rsscontent
+            ])->render();
+        } else if ($layout == 2) {
+            $html = view('two', [
+                'currentTime' => $currentTime,
+                'banners' => $banners,
+                'logos' => $logos,
+                'videos' => $videos,
+                'images' => $images,
+                'mycontent' => $mycontent,
+                'rsscontent' => $rsscontent
+            ])->render();
+        } else if ($layout == 3) {
+            $html = view('three', [
+                'currentTime' => $currentTime,
+                'banners' => $banners,
+                'logos' => $logos,
+                'videos' => $videos,
+                'images' => $images,
+                'mycontent' => $mycontent,
+                'rsscontent' => $rsscontent
+            ])->render();
+        }
+
+        $html = view('home', [
+            'currentTime' => $currentTime,
+            'banners' => $banners,
+            'logos' => $logos,
+            'videos' => $videos,
+            'images' => $images,
+            'mycontent' => $mycontent,
+            'rsscontent' => $rsscontent
+        ])->render();
+
+        $file = Storage::put('published.html', $html);
+
+        return redirect('/form');
     }
 
 }
