@@ -91,17 +91,30 @@ class EditorController extends Controller
             'rsscontent' => $rsscontent
         ]);
 
-        return view('home', [
-            'layout' => $layout,
-            'currentTime' => $currentTime,
-            'banners' => $pubbanners,
-            'logos' => $publogos,
-            'videos' => $pubvideos,
-            'images' => $pubimages,
-            'mycontent' => $mycontent,
-            'rsscontent' => $rsscontent
-        ]);
+        if ($layout == 1) {
+            return view('home', [
+                'layout' => $layout,
+                'currentTime' => $currentTime,
+                'banners' => $pubbanners,
+                'logos' => $publogos,
+                'videos' => $pubvideos,
+                'images' => $pubimages,
+                'mycontent' => $mycontent,
+                'rsscontent' => $rsscontent
+            ]);
+        } else if ($layout == 2) {
+            return view('ltwo', [
+                'layout' => $layout,
+                'currentTime' => $currentTime,
+                'banners' => $pubbanners,
+                'logos' => $publogos,
+                'videos' => $pubvideos,
+                'images' => $pubimages,
+                'mycontent' => $mycontent,
+                'rsscontent' => $rsscontent
+            ]);
 
+        }
     }
 
     public function download(Request $request)
@@ -138,7 +151,7 @@ class EditorController extends Controller
                 'rsscontent' => $rsscontent
             ])->render();
         } else if ($layout == 2) {
-            $html = view('two', [
+            $html = view('ltwo', [
                 'currentTime' => $currentTime,
                 'banners' => $banners,
                 'logos' => $logos,
@@ -148,7 +161,7 @@ class EditorController extends Controller
                 'rsscontent' => $rsscontent
             ])->render();
         } else if ($layout == 3) {
-            $html = view('three', [
+            $html = view('lthree', [
                 'currentTime' => $currentTime,
                 'banners' => $banners,
                 'logos' => $logos,
