@@ -113,6 +113,17 @@ class EditorController extends Controller
                 'mycontent' => $mycontent,
                 'rsscontent' => $rsscontent
             ]);
+        } else if ($layout == 3) {
+            return view('lthree', [
+                'layout' => $layout,
+                'currentTime' => $currentTime,
+                'banners' => $pubbanners,
+                'logos' => $publogos,
+                'videos' => $pubvideos,
+                'images' => $pubimages,
+                'mycontent' => $mycontent,
+                'rsscontent' => $rsscontent
+            ]);
 
         }
     }

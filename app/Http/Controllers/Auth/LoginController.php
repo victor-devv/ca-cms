@@ -42,9 +42,9 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         $request = request();
-        if ($request->has('form-editor')) {
+        if ($request->editor == 'form') {
             return '/form';
-        } else if ($request->has('visual-editor')) {
+        } else if ($request->editor == 'visual') {
             dd('visual editor');
         }
     }
